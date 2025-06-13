@@ -1,7 +1,7 @@
 // Parâmetros do grid
-const cols = 20;
-const rows = 20;
-const cellSize = 30;
+const cols = 30;
+const rows = 30;
+const cellSize = 20;
 
 // Tipos de terreno
 const OBSTACLE = 0;
@@ -36,7 +36,7 @@ let moveCooldown = 0;
 
 function setup() {
   createCanvas(cols * cellSize, rows * cellSize);
-  gerarMapa(); // Corrigido para gerarMapa
+  gerarMapa(); 
   placeAgentAndFood();
   setupUI();
   iniciarBusca();
@@ -101,31 +101,13 @@ function iniciarDFS() {
 }
 
 // ---------- UCS ----------
-function iniciarUCS() {
-  searchQueue = [{ x: agent.x, y: agent.y, cost: 0 }];
-  searchVisited = Array(rows).fill().map(() => Array(cols).fill(false));
-  searchVisited[agent.y][agent.x] = true;
-  searchParent = {};
-  searchFrontier = [{ x: agent.x, y: agent.y }];
-}
+
 
 // ---------- Gulosa ----------
-function iniciarGreedy() {
-  searchQueue = [{ x: agent.x, y: agent.y, h: manhattan(agent.x, agent.y, food.x, food.y) }];
-  searchVisited = Array(rows).fill().map(() => Array(cols).fill(false));
-  searchVisited[agent.y][agent.x] = true;
-  searchParent = {};
-  searchFrontier = [{ x: agent.x, y: agent.y }];
-}
+
 
 // ---------- A* ----------
-function iniciarAStar() {
-  searchQueue = [{ x: agent.x, y: agent.y, cost: 0, h: manhattan(agent.x, agent.y, food.x, food.y) }];
-  searchVisited = Array(rows).fill().map(() => Array(cols).fill(false));
-  searchVisited[agent.y][agent.x] = true;
-  searchParent = {};
-  searchFrontier = [{ x: agent.x, y: agent.y }];
-}
+
 
 function animarBusca() {
   if (searchQueue.length === 0) {
@@ -160,12 +142,8 @@ function animarBusca() {
   for (let viz of vizinhos(atual)) {
     if (!searchVisited[viz.y][viz.x] && grid[viz.y][viz.x] !== OBSTACLE) {
       if (searchType === 'ucs' || searchType === 'astar') {
-        let cost = (atual.cost || 0) + terrainCosts[grid[viz.y][viz.x]];
-        let h = manhattan(viz.x, viz.y, food.x, food.y);
-        searchQueue.push({ x: viz.x, y: viz.y, cost, h });
       } else if (searchType === 'greedy') {
-        let h = manhattan(viz.x, viz.y, food.x, food.y);
-        searchQueue.push({ x: viz.x, y: viz.y, h });
+        
       } else {
         searchQueue.push({ x: viz.x, y: viz.y });
       }
@@ -260,7 +238,7 @@ function drawInfo() {
 }
 
 function reiniciar() {
-  gerarMapa(); // Corrigido para gerarMapa
+  gerarMapa(); 
   placeAgentAndFood();
   comidaColetada = 0;
   iniciarBusca();
@@ -324,6 +302,3 @@ function drawAgentAndFood() {
     cellSize * 0.7
   );
 }
-
-// Aqui você irá implementar os algoritmos de busca e animação dos estágios
-// ...
