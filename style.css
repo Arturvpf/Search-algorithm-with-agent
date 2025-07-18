@@ -1,0 +1,35 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #212121;
+    font-family: sans-serif;
+    color: white;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+p {
+    color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+select, button {
+    background-color: #424242;
+    color: white;
+    border: 1px solid #616161;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #616161;
+}

@@ -1,27 +1,24 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Busca em Grid - p5.js</title>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Algoritmos de Busca</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-    <script src="sketch.js"></script>
-    <style>
-        body { background: #222; color: #eee; font-family: Arial, sans-serif; }
-        #controls { margin: 10px; }
-    </style>
-</head>
-<body>
-    <div id="controls">
-        <label for="searchType">Tipo de busca:</label>
-        <select id="searchType">
-            <option value="bfs">Largura (BFS)</option>
-            <option value="dfs">Profundidade (DFS)</option>
-            <option value="ucs">Custo Uniforme (UCS)</option>
-            <option value="greedy">Gulosa</option>
-            <option value="astar">A*</option>
-        </select>
-        <button onclick="reiniciar()">Reiniciar Mapa</button>
-    </div>
-    <main></main>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.dom.min.js"></script>
+  </head>
+
+  <body>
+    <main id="main">
+    </main>
+    <script src="src/config.js"></script>
+    <script src="src/ui.js"></script>
+    <script src="src/drawing.js"></script>
+    <script src="src/map_generator.js"></script>
+    <script src="src/search_logic.js"></script>
+    <script src="src/sketch.js"></script>
+  </body>
 </html>
