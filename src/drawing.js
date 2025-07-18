@@ -1,20 +1,20 @@
-// FUNÇÕES DE DESENHO E VISUALIZAÇÃO
-// Descrição: Todas as funções responsáveis por desenhar elementos na tela.
+// DRAWING AND VISUALIZATION FUNCTIONS
+// Description: All functions responsible for drawing elements on screen.
 
-// Desenha a grelha de terrenos com as suas respetivas cores.
+// Draws the terrain grid with their respective colors.
 function drawGrid() {
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
       fill(terrainColors[grid[y][x]]);
-      stroke('#21212119'); // Contorno da cor do fundo
+      stroke('#21212119'); // Background color outline
       rect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
   }
 }
 
-// Desenha os estados da busca: nós visitados e fronteira.
+// Draws search states: visited nodes and frontier.
 function drawSearchState() {
-    // Nós visitados (área vermelha)
+    // Visited nodes (red area)
     fill('rgba(24,90,0,0.45)');
     noStroke();
     for (const key in visited) {
@@ -22,55 +22,55 @@ function drawSearchState() {
       rect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
     
-    // Nós na fronteira (área azul)
+    // Nodes in frontier (blue area)
     fill('rgba(65,255,11,0.7)');
     noStroke();
     for (const pos of frontier) {
       rect(pos.x * cellSize, pos.y * cellSize, cellSize, cellSize);
     }
 
-    // Caminho final (linha branca)
+    // Final path (white line)
     if (!searching && agentPath && agentPath.length > 0) {
-      strokeWeight(5); // Espessura de linha
-      stroke('rgba(255, 255, 255, 0.9)'); // Cor da linha
+      strokeWeight(5); // Line thickness
+      stroke('rgba(255, 255, 255, 0.9)'); // Line color
       noFill();
       beginShape();
       for (const pos of agentPath) {
           vertex(pos.x * cellSize + cellSize / 2, pos.y * cellSize + cellSize / 2);
       }
       endShape();
-      strokeWeight(1); // Restaura a espessura da linha
+      strokeWeight(1); // Restores line thickness
     }
 }
 
-// Desenha o agente e a comida.
+// Draws the agent and food.
 function drawAgentAndFood() {
-    // Comida
+    // Food
     fill('#D32F2F');
     stroke('#000');
     strokeWeight(2.5);
     ellipse(food.x * cellSize + cellSize / 2, food.y * cellSize + cellSize / 2, cellSize * 0.7);
 
-    // Agente
+    // Agent
     fill('#64DD17');
     stroke('#000');
     strokeWeight(2.5);
     ellipse(agent.x * cellSize + cellSize / 2, agent.y * cellSize + cellSize / 2, cellSize * 0.8);
 }
 
-// Desenha o painel de informações.
+// Draws the information panel.
 function drawInfoPanel() {
     fill(0, 0, 0, 150);
     noStroke();
     rect(0, 0, width, 30);
 
-    // Desenha o texto
+    // Draws the text
     fill('#FFFFFF');
     textSize(16);
     textAlign(LEFT, CENTER);
-    text(`Comidas: ${collectedFood}`, 10, 15);
-    text(`Nós Explorados: ${exploredNodes}`, 180, 15);
+    text(`Food: ${collectedFood}`, 10, 15);
+    text(`Explored Nodes: ${exploredNodes}`, 180, 15);
     if (!searching && totalCost > 0) {
-      text(`Custo Final: ${totalCost}`, 380, 15);
+      text(`Final Cost: ${totalCost}`, 380, 15);
     }
 }

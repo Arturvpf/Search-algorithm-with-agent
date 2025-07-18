@@ -1,56 +1,56 @@
-// VARIÁVEIS DE ESTADO DA SIMULAÇÃO
-// Descrição: Este bloco define as variáveis globais que guardam
-// o estado atual da simulação
+// SIMULATION STATE VARIABLES
+// Description: This block defines the global variables that store
+// the current state of the simulation
 
 let grid = [];
 let agent = {};
 let food = {};
 
-// Variáveis que controlam o fluxo da aplicação
+// Variables that control the application flow
 let searchType = 'astar'; 
 let searching = false;    
 let agentMoving = false;  
 
-// Estatísticas da simulação
+// Simulation statistics
 let collectedFood = 0;
 let totalCost = 0;
 let exploredNodes = 0;
 
-// Estruturas de dados para a busca e movimento
-let agentPath = []; // Caminho que o agente irá seguir
-let agentStep = 0;  // Posição atual do agente
-let frontier = [];  // Nós a serem explorados
-let visited = {};   // Nós já visitados
-let parent = {};    // Para reconstruir o caminho
+// Data structures for search and movement
+let agentPath = []; // Path that the agent will follow
+let agentStep = 0;  // Current position of the agent
+let frontier = [];  // Nodes to be explored
+let visited = {};   // Already visited nodes
+let parent = {};    // To reconstruct the path
 
-// Variáveis para os elementos da interface da (ui)
+// Variables for the user interface (ui) elements
 let searchSpeedSlider, searchTypeSelect, resetButton;
 
-// FUNÇÕES PRINCIPAIS DO P5.JS
-// Descrição: Este é o coração do p5.js. `setup()` é executado uma vez no
-// início e `draw()` é executado repetidamente (a cada frame), criando a
-// animação.
+// MAIN P5.JS FUNCTIONS
+// Description: This is the heart of p5.js. `setup()` is executed once at
+// startup and `draw()` is executed repeatedly (every frame), creating the
+// animation.
 
 function setup() {
-  // Cria o canvas e anexa-o ao elemento <main> do HTML
+  // Creates the canvas and attaches it to the <main> HTML element
   const canvas = createCanvas(cols * cellSize, rows * cellSize + 50);
   canvas.parent('main');
       
   setupUI();
-    resetSimulation(); // inicia a simulação
+    resetSimulation(); // starts the simulation
 }
 
 function draw() {
-  frameRate(searchSpeedSlider.value()); // A velocidade da animação é pelo slider
+  frameRate(searchSpeedSlider.value()); // Animation speed is controlled by the slider
   background('#212121');
 
-  // Desenha todos os componentes visuais
+  // Draws all visual components
   drawGrid();
   drawSearchState();
   drawAgentAndFood();
   drawInfoPanel();
 
-  // Controla a lógica principal da animação
+  // Controls the main animation logic
   if (searching) {
     stepSearch();
   }
@@ -59,32 +59,32 @@ function draw() {
   }
 }
 
-// CONTROLE DA SIMULAÇÃO
-// Descrição: Funções que gerem o ciclo da simulação, como
-// reiniciar o ambiente ou iniciar uma nova busca.
+// SIMULATION CONTROL
+// Description: Functions that manage the simulation cycle, such as
+// restarting the environment or starting a new search.
 
-// Reseta toda a simulação.
+// Resets the entire simulation.
 function resetSimulation() {
   searchType = searchTypeSelect.value();
-  generateSolvableMap(); // O mapa é gerado aleatoriamente
-  placeFood(); // Uma comida aparece
-  startSearch(); // O agente realiza a busca
+  generateSolvableMap(); // The map is randomly generated
+  placeFood(); // Food appears
+  startSearch(); // The agent performs the search
 }
 
-// Inicia uma nova busca a partir da posição atual do agente
+// Starts a new search from the agent's current position
 function startSearch() {
   searching = true;
   agentMoving = false;
       
-  // Reseta as estruturas de dados da busca anterior
+  // Resets the data structures from the previous search
   frontier = [], visited = {}, parent = {};
   totalCost = 0, exploredNodes = 0, agentPath = [], agentStep = 0;
 
-  // Cria o nó (posição do agente)
+  // Creates the node (agent's position)
   const startNode = {
     x: agent.x, y: agent.y,
-    cost: 0, // g(n) - custo para chegar até aqui
-    h: manhattan(agent.x, agent.y, food.x, food.y) // h(n) - heurística
+    cost: 0, // g(n) - cost to reach here
+    h: manhattan(agent.x, agent.y, food.x, food.y) // h(n) - heuristic
   };
       
   const startKey = `${startNode.x},${startNode.y}`;
@@ -92,8 +92,8 @@ function startSearch() {
   visited[startKey] = { cost: 0 };
 }
 
-// MOVIMENTO DO AGENTE
-// Descrição: Controla a animação do agente.
+// AGENT MOVEMENT
+// Description: Controls the agent's animation.
 let lastMoveTime = 0;
 const Agent_Speed = 80;
 function stepAgentMovement() {
