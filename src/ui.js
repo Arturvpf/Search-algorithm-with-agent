@@ -1,6 +1,6 @@
-// GESTÃO DA UI
-// Descrição: Responsável por criar e configurar os elementos
-// como botões e seletores.
+// UI MANAGEMENT
+// Description: Responsible for creating and configuring elements
+// such as buttons and selectors.
 
 function setupUI() {
     const uiContainer = createDiv();
@@ -9,7 +9,7 @@ function setupUI() {
     uiContainer.style('gap', '20px');
     uiContainer.style('align-items', 'center');
 
-    // Seletor para o tipo de algoritmo
+    // Selector for algorithm type
     const selectGroup = createDiv().parent(uiContainer);
     createP('Algoritmo:').parent(selectGroup);
     searchTypeSelect = createSelect().parent(selectGroup);
@@ -19,14 +19,14 @@ function setupUI() {
     searchTypeSelect.option('Largura (BFS)', 'bfs');
     searchTypeSelect.option('Profundidade (DFS)', 'dfs');
     searchTypeSelect.selected(searchType);
-    searchTypeSelect.changed(resetSimulation); // Reinicia a simulação ao mudar
+    searchTypeSelect.changed(resetSimulation); // Restarts simulation when changed
 
-    // Slider para controlar a velocidade da animação
+    // Slider to control animation speed
     const sliderGroup = createDiv().parent(uiContainer);
     createP('Velocidade:').parent(sliderGroup);
     searchSpeedSlider = createSlider(1, 60, 30).parent(sliderGroup);
 
-    // Botão para reiniciar a simulação com um novo mapa
+    // Button to restart simulation with a new map
     resetButton = createButton('Gerar Novo Mapa').parent(uiContainer);
     resetButton.mousePressed(resetSimulation);
 }

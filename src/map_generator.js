@@ -1,33 +1,33 @@
-// GERAÇÃO DO MAPA
-// Descrição: Responsável por gerar um mapa aleatório, mas garantindo que
-// seja sempre solucionável (i.e., não há áreas inacessíveis).
+// MAP GENERATION
+// Description: Responsible for generating a random map, but ensuring it
+// is always solvable (i.e., there are no inaccessible areas).
 
-// Gera um mapa usando uma variação do algoritmo de Prim() para garantir
-// que todos os caminhos estejam conectados.
+// Generates a map using a variation of Prim's algorithm to ensure
+// that all paths are connected.
 function generateSolvableMap() {
   grid = Array(rows).fill(0).map(() => Array(cols).fill(OBSTACLE));
       
-  // O agente aparece em uma posição aleatória
+  // The agent appears at a random position
   agent = {
     x: floor(random(1, cols - 1)),
     y: floor(random(1, rows - 1))
   };
       
   const walls = [];
-  grid[agent.y][agent.x] = SAND; // O agente começa em areia
+  grid[agent.y][agent.x] = SAND; // The agent starts on sand
       
-  // Adiciona as paredes adjacentes ao ponto inicial à lista de paredes
+  // Adds adjacent walls to the starting point to the wall list
   getNeighbors(agent).forEach(wall => walls.push(wall));
   while (walls.length > 0) {
     const randomIndex = floor(random(walls.length));
     const wall = walls.splice(randomIndex, 1)[0];
         
-    // Verifica quantos vizinhos da parede já são passagens
+    // Checks how many neighbors of the wall are already passages
     const passages = getNeighbors(wall).filter(n => grid[n.y][n.x] !== OBSTACLE);
 
-    // Se a wall separar uma área explorada de uma não explorada, transforma-a em passagem
+    // If the wall separates an explored area from an unexplored one, turn it into a passage
     if (passages.length === 1) {
-      let r = random(); // Sorteia o tipo de terreno
+      let r = random(); // Randomly selects terrain type
       if (r < 0.6){
         grid[wall.y][wall.x] = SAND;
       }
@@ -38,7 +38,7 @@ function generateSolvableMap() {
         grid[wall.y][wall.x] = WATER;
       }
            
-      // Adiciona as novas paredes adjacentes à lista
+      // Adds new adjacent walls to the list
       getNeighbors(wall).forEach(n => {
         if (grid[n.y][n.x] === OBSTACLE){
           walls.push(n);
@@ -52,7 +52,7 @@ function generateSolvableMap() {
   }
 }
 
-// Posicionar a comida numa célula válida
+// Position food in a valid cell
 function placeFood() {
   do {
     food = {

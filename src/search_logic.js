@@ -1,19 +1,19 @@
-// LÓGICA DOS ALGORITMOS DE BUSCA
-// Descrição: O núcleo do projeto. `stepSearch` executa um passo de busca
-// por frame, animando o processo. `applySearchStrategy` implementa a lógica de
-// prioridade de cada algoritmo.
+// SEARCH ALGORITHMS LOGIC
+// Description: The core of the project. `stepSearch` executes one search step
+// per frame, animating the process. `applySearchStrategy` implements the
+// priority logic for each algorithm.
 
 
-// Executa um passo da animação de busca.
+// Executes one step of the search animation.
 function stepSearch() {
   if (frontier.length === 0) {
-    console.log("Busca finalizada: sem caminho possível.");
+    console.log("Search finished: no possible path.");
     searching = false;
     return;
   }
   
-  applySearchStrategy(); // Ordena a fronteira de acordo com o algoritmo
-  const currentNode = frontier.pop(); // Retira o nó de maior prioridade
+  applySearchStrategy(); // Orders the frontier according to the algorithm
+  const currentNode = frontier.pop(); // Removes the highest priority node
   
   const currentKey = `${currentNode.x},${currentNode.y}`;
   if (currentNode.cost > visited[currentKey].cost){
@@ -22,34 +22,34 @@ function stepSearch() {
   
   exploredNodes++;
   
-  // O agente define a posição da comida como estado objetivo
+  // The agent defines the food position as the goal state
   if (currentNode.x === food.x && currentNode.y === food.y) {
     totalCost = currentNode.cost;
-    agentPath = reconstructPath(currentNode); // Define um caminho
+    agentPath = reconstructPath(currentNode); // Defines a path
     searching = false;
     agentMoving = true;
     lastMoveTime = millis();
     return;
   }
   
-  // Expande o nó atual, explorando os seus vizinhos
+  // Expands the current node, exploring its neighbors
   for (const neighborPos of getNeighbors(currentNode)) {
     const terrainType = grid[neighborPos.y][neighborPos.x];
     if (terrainType === OBSTACLE){
-      continue; // Ignora obstáculos
+      continue; // Ignores obstacles
     }
     
     let newCost;
     if (searchType === 'bfs') {
-      // Para BFS, cada passo tem custo 1, ignorando o terreno.
+      // For BFS, each step has cost 1, ignoring terrain.
       newCost = currentNode.cost + 1;
     } else {
-        // Para os outros algoritmos (UCS, A*), usa-se o custo real do terreno.
+        // For other algorithms (UCS, A*), use the real terrain cost.
         newCost = currentNode.cost + terrainCosts[terrainType];
     }
     const neighborKey = `${neighborPos.x},${neighborPos.y}`;
 
-    // Se o vizinho nunca foi visitado ou se encontrámos um caminho mais barato
+    // If the neighbor was never visited or if we found a cheaper path
     if (!visited[neighborKey] || newCost < visited[neighborKey].cost) {
         visited[neighborKey] = { cost: newCost };
         parent[neighborKey] = currentNode;
@@ -64,35 +64,35 @@ function stepSearch() {
   }
 }
 
-// Ordena de acordo com o algoritmo escolhido.
-// Esta função diferencia os algoritmos de busca.
+// Orders according to the chosen algorithm.
+// This function differentiates the search algorithms.
 function applySearchStrategy() {
   if (searchType === 'bfs') {
       frontier.sort((a, b) => b.cost - a.cost); 
       return;
   }
   if (searchType === 'dfs'){
-    return; // DFS usa pilha (LIFO).
+    return; // DFS uses stack (LIFO).
   }
-  // Ordena de forma que o melhor elemento fique no final do array (para usar `pop()`)
+  // Sorts so that the best element is at the end of the array (to use `pop()`)
   frontier.sort((a, b) => {
     if (searchType === 'ucs'){
-       return b.cost - a.cost; // Custo Uniforme: prioriza menor g(n)
+       return b.cost - a.cost; // Uniform Cost: prioritizes lower g(n)
     }
     if (searchType === 'greedy'){
-      return b.h - a.h; // Gulosa: prioriza menor h(n)
+      return b.h - a.h; // Greedy: prioritizes lower h(n)
     }
     if (searchType === 'astar'){
-      return (b.cost + b.h) - (a.cost + a.h); // A*: prioriza menor f(n) = g(n) + h(n)
+      return (b.cost + b.h) - (a.cost + a.h); // A*: prioritizes lower f(n) = g(n) + h(n)
     }
   });
 }
 
 
-// FUNÇÕES UTILITÁRIAS DE PATHFINDING
-// Descrição: Funções de apoio que são usadas pelos algoritmos de busca.
+// PATHFINDING UTILITY FUNCTIONS
+// Description: Support functions used by the search algorithms.
 
-// Reconstrói o caminho do destino até à origem
+// Reconstructs the path from destination to origin
 function reconstructPath(destination) {
   const path = [];
   let current = destination;
@@ -100,10 +100,10 @@ function reconstructPath(destination) {
     path.push(current);
     current = parent[`${current.x},${current.y}`];
   }
-  return path.reverse(); // Inverte para ter o caminho da origem ao destino
+  return path.reverse(); // Reverses to have the path from origin to destination
 }
 
-// Retorna os vizinhos válidos (cima, baixo, esquerda, direita) de uma posição.
+// Returns valid neighbors (up, down, left, right) of a position.
 function getNeighbors(pos) {
   const dirs = [{ x: 0, y: -1 }, { x: 1, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 0 }];
   const result = [];
@@ -117,7 +117,7 @@ function getNeighbors(pos) {
   return result;
 }
 
-// Calcula a Distância de Manhattan
+// Calculates Manhattan Distance
 function manhattan(x1, y1, x2, y2) {
   return abs(x1 - x2) + abs(y1 - y2);
 }

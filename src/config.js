@@ -1,18 +1,18 @@
-// CONFIGURAÇÃO E CONSTANTES GLOBAIS
-// Descrição: Este arquivo contém todas as constantes e parâmetros que 
-// definem o comportamento e a aparência da simulação.
+// GLOBAL CONFIGURATION AND CONSTANTS
+// Description: This file contains all constants and parameters that
+// define the behavior and appearance of the simulation.
 
 const cols = 25;
 const rows = 25;
 const cellSize = 18;
 
-// Definição dos tipos de terreno
+// Terrain type definition
 const OBSTACLE = 'obstacle';
 const SAND = 'sand';
 const MUD = 'mud';
 const WATER = 'water';
 
-// Custos associados a cada tipo de terreno.
+// Costs associated with each terrain type.
 const terrainCosts = {
   [SAND]: 1,
   [MUD]: 5,
@@ -21,7 +21,7 @@ const terrainCosts = {
 };
 
 
-// Aparência do mapa.
+// Map appearance.
 const terrainColors = {
   [OBSTACLE]: '#424242',
   [SAND]:     '#DCDCCF',
