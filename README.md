@@ -29,16 +29,16 @@ Each grid cell can contain:
 
 ```
 Search-algorithm-with-agent/
-├── index.html              # Main page
-├── style.css               # Visual interface styling
-├── README.md               # Documentation
-└── src/                    # Simulation source code
-    ├── config.js           # Global parameters
-    ├── drawing.js          # Graphic rendering
-    ├── map_generator.js    # Random map generation
-    ├── search_logic.js     # Algorithm implementation and search animation
-    ├── sketch.js           # General simulation control
-    └── ui.js               # User interface and interactions
+├── index.html # Main page
+├── style.css # Visual interface styling
+├── README.md # Documentation
+└── src/ # Simulation source code
+ ├── config.js # Global parameters
+ ├── drawing.js # Graphic rendering
+ ├── map_generator.js # Random map generation
+ ├── search_logic.js # Algorithm implementation and search animation
+ ├── sketch.js # General simulation control
+ └── ui.js # User interface and interactions
 ```
 
 ## How to Run
